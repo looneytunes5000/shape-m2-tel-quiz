@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Technology Enhanced Learning at VTC — SHAPE Module M2</title>
+  <meta name="description" content="Watch the VTC video on technology enhanced learning, then identify the five TEL types from the course framework. A no-login activity for CLT training (SHAPE Module M2).">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="masthead wrap">
+    <p class="mast-org">VTC CLT Training and Workshop</p>
+    <h1>Technology Enhanced Learning at VTC</h1>
+    <p class="mast-module">An interactive video activity for SHAPE Module M2</p>
+  </header>
+
+  <main class="wrap">
+    <section class="brief" aria-labelledby="how-heading">
+      <h2 id="how-heading">How this activity works</h2>
+      <ol class="steps">
+        <li>Watch the three-minute video below.</li>
+        <li>Identify the five types of technology enhanced learning according to the course framework. The video demonstrates individual technologies; your task is the framework categories.</li>
+        <li>Submit your five answers to see your score, a full review and a completion certificate.</li>
+      </ol>
+    </section>
+
+    <section class="video-block" aria-labelledby="video-heading">
+      <h2 id="video-heading">Watch first: the source video</h2>
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/KBlohpOEJOs?rel=0"
+          title="VTC Technology Enhanced Learning (YouTube video)"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy"></iframe>
+      </div>
+      <p class="video-caption">“VTC Technology Enhanced Learning” (3 min 25 s), published by VTC on YouTube.</p>
+    </section>
+
+    <section class="question" id="quiz-section" aria-labelledby="q-heading">
+      <h2 id="q-heading">Your five answers</h2>
+      <p class="q-instructions" id="q-instructions"></p>
+      <div class="options" id="options" role="group" aria-label="Answer options"></div>
+      <div class="submit-row">
+        <p class="count" id="count" aria-live="polite">0 of 5 selected</p>
+        <p class="count-hint" id="count-hint" aria-live="polite">Select five options to continue.</p>
+        <button class="submit" id="submit" type="button" disabled>Submit answers</button>
+      </div>
+    </section>
+
+    <section class="results" id="results" hidden>
+      <h2 id="results-heading" tabindex="-1">Your result</h2>
+      <p class="score-line" id="score-line" role="status"></p>
+      <h3>Review of every option</h3>
+      <ul class="review" id="review"></ul>
+
+      <div class="certificate">
+        <div class="cert-controls">
+          <label for="cert-name">Your name (optional, printed on the certificate)</label>
+          <input id="cert-name" type="text" maxlength="60" autocomplete="name">
+          <button class="print-btn" id="print-btn" type="button">Print certificate</button>
+        </div>
+        <div class="cert-border">
+          <p class="cert-org" id="cert-org"></p>
+          <p class="cert-title" id="cert-title"></p>
+          <p class="cert-for">This certifies that</p>
+          <p class="cert-name" id="cert-name-display">Participant</p>
+          <p class="cert-for">has completed the interactive video activity</p>
+          <p class="cert-activity" id="cert-activity"></p>
+          <p class="cert-module" id="cert-module"></p>
+          <p class="cert-meta"><span id="cert-date"></span> — score <span id="cert-score"></span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="colophon wrap">
+    <p>Source video: “VTC Technology Enhanced Learning” © Vocational Training Council, on YouTube.</p>
+    <p>Built for CLT training use. No accounts, no data collection — everything stays on this page.</p>
+  </footer>
+
+  <noscript><p class="noscript">This activity needs JavaScript to run.</p></noscript>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
