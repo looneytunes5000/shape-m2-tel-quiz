@@ -3,22 +3,19 @@
 // -------------------------------------------------------------------------
 // Everything a facilitator might want to change lives in the QUIZ object
 // below. No other file needs editing.
-//   videoId ......... the YouTube id of the embedded video
-//   instructions .... shown above the answer options
-//   requiredPicks ... how many options a participant must select (kept at 5)
-//   options ......... exactly eight entries; set correct: true on the five
+//   videoId ......... the YouTube id of the embedded video (wired in by
+//                     app.mjs — no HTML edit needed)
+//   requiredPicks ... how many answers the task asks for (kept at 5)
+//   options ......... exactly nine entries; set correct: true on the five
 //                     answers and correct: false on the distractors
-//   explanation ..... one line shown for each option in the results review
+//   explanation ..... context for each option (not shown in the current
+//                     reveal-only flow; kept as facilitator reference)
 // ==========================================================================
 
 export const QUIZ = {
   videoId: 'KBlohpOEJOs',
   videoTitle: 'VTC Technology Enhanced Learning',
   requiredPicks: 5,
-  instructions:
-    'Identify the five types of technology enhanced learning (TEL) at VTC ' +
-    'according to the course framework — not simply the individual ' +
-    'technologies demonstrated in the video. Select exactly five options.',
   options: [
     {
       id: 'applied-digital-skills',
@@ -76,13 +73,14 @@ export const QUIZ = {
       explanation:
         'A technology demonstrated in the video, not a framework category — MR is an example of smart learning facilities (1:58).',
     },
+    {
+      id: 'blended-learning',
+      label: 'Blended Learning',
+      correct: false,
+      explanation:
+        'Named in the video (2:35) as a teaching approach, not a framework type — the blended-learning content belongs to the Learning Management Platform category.',
+    },
   ],
-  certificate: {
-    org: 'VTC CLT Training and Workshop',
-    title: 'Certificate of Completion',
-    activity: 'Technology Enhanced Learning at VTC',
-    module: 'SHAPE Module M2',
-  },
 };
 
 // ==========================================================================
@@ -97,7 +95,16 @@ export function createQuiz(config = QUIZ) {
 
   const isSelected = (id) => selected.has(id);
   const selectedCount = () => selected.size;
-  const canSubmit = () => selected.size === config.requiredPicks;
+  const correctSelectedCount = () =>
+    config.options.filter((o) => o.correct && selected.has(o.id)).length;
+
+  // Solved when the selection is exactly the set of correct answers —
+  // all five found, nothing wrong left selected.
+  const isSolved = () => {
+    const correctIds = config.options.filter((o) => o.correct).map((o) => o.id);
+    return correctIds.length === selected.size
+      && correctIds.every((id) => selected.has(id));
+  };
 
   const toggle = (id) => {
     if (selected.has(id)) {
@@ -107,34 +114,5 @@ export function createQuiz(config = QUIZ) {
     }
   };
 
-  const submit = () => {
-    if (selected.size !== config.requiredPicks) {
-      return {
-        ok: false,
-        reason: `Select exactly ${config.requiredPicks} options before submitting.`,
-      };
-    }
-    const review = config.options.map((o) => {
-      const chosen = selected.has(o.id);
-      const verdict = chosen
-        ? (o.correct ? 'correct' : 'incorrect')
-        : (o.correct ? 'missed' : 'avoided');
-      return {
-        id: o.id,
-        label: o.label,
-        explanation: o.explanation,
-        correctAnswer: o.correct,
-        chosen,
-        verdict,
-      };
-    });
-    return {
-      ok: true,
-      score: review.filter((r) => r.verdict === 'correct').length,
-      max: config.requiredPicks,
-      review,
-    };
-  };
-
-  return { toggle, isSelected, selectedCount, canSubmit, submit, config };
+  return { toggle, isSelected, selectedCount, correctSelectedCount, isSolved, config };
 }

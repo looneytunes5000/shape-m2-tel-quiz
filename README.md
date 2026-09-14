@@ -3,26 +3,27 @@
 A single-page, no-login activity for CLT training workshops. Participants watch
 the official VTC video **“VTC Technology Enhanced Learning”** (3 min 25 s), then
 identify the **five types of technology enhanced learning** according to the
-course framework by selecting five correct answers out of eight options. After
-submitting once, they see their score, a right/wrong review of every option, and
-a printable completion certificate.
+course framework by picking them from nine options. Each pick instantly shows
+whether it is a framework category (green) or a demonstrated technology (red);
+the activity completes when all five are found, and **Start again** reloads
+with a fresh shuffle.
 
 **Live URL:** https://looneytunes5000.github.io/shape-m2-tel-quiz/
 
 ## How it is built
 
 - `index.html` — the page structure
-- `styles.css` — the light orange academic theme (and print styles for the certificate)
+- `styles.css` — the light orange academic theme
 - `quiz.mjs` — the quiz engine. **All editable content (video id, instructions,
-  options, explanations, certificate wording) lives in the clearly-marked
+  options, explanations) lives in the clearly-marked
   configuration block at the top of this file.** Set `correct: true` on the five
   right answers; everything else is derived automatically.
 - `app.mjs` — the view layer that renders engine state; contains no business logic
 - `quiz.test.mjs` — tests for the engine's public API
 
 No frameworks, no build step, no dependencies, no data collection. Options are
-shuffled on every page load; scoring is keyed by option id, so shuffling never
-affects results. One submission per page load — a fresh visit is a fresh attempt.
+shuffled on every page load; correctness is keyed by option id, so shuffling
+never matters. Start again reloads the page for a fresh attempt.
 
 ## Running locally
 

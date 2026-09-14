@@ -8,12 +8,11 @@ const correctIds = () => QUIZ.options.filter((o) => o.correct).map((o) => o.id);
 const distractorIds = () => QUIZ.options.filter((o) => !o.correct).map((o) => o.id);
 const pickAll = (quiz, ids) => ids.forEach((id) => quiz.toggle(id));
 
-test('configuration defines exactly eight options with exactly five correct', () => {
-  assert.equal(QUIZ.options.length, 8);
+test('configuration defines exactly nine options with exactly five correct', () => {
+  assert.equal(QUIZ.options.length, 9);
   assert.equal(QUIZ.options.filter((o) => o.correct).length, 5);
   assert.equal(QUIZ.requiredPicks, 5);
   assert.ok(QUIZ.videoId);
-  assert.ok(QUIZ.instructions.trim().length > 0);
 });
 
 test('every option has a unique id, a label and an explanation', () => {
@@ -24,19 +23,6 @@ test('every option has a unique id, a label and an explanation', () => {
     assert.ok(o.explanation.trim().length > 0, `missing explanation for ${o.id}`);
     assert.equal(typeof o.correct, 'boolean');
   }
-});
-
-test('canSubmit is true only when exactly five options are selected', () => {
-  const ids = QUIZ.options.map((o) => o.id);
-  const quiz = createQuiz();
-  for (let i = 0; i < 4; i += 1) {
-    quiz.toggle(ids[i]);
-    assert.equal(quiz.canSubmit(), false, `should be blocked at ${i + 1} selected`);
-  }
-  quiz.toggle(ids[4]);
-  assert.equal(quiz.canSubmit(), true, 'should open at exactly 5 selected');
-  quiz.toggle(ids[5]);
-  assert.equal(quiz.canSubmit(), false, 'should block again beyond 5');
 });
 
 test('toggling the same option twice deselects it', () => {
@@ -50,62 +36,32 @@ test('toggling the same option twice deselects it', () => {
   assert.equal(quiz.isSelected(first), false);
 });
 
-test('submit with fewer than five selected is rejected and changes nothing', () => {
+test('isSolved is true only when exactly the five correct options are selected', () => {
   const quiz = createQuiz();
+  assert.equal(quiz.isSolved(), false, 'starts unsolved');
   pickAll(quiz, correctIds().slice(0, 4));
-  const result = quiz.submit();
-  assert.equal(result.ok, false);
-  assert.ok(result.reason.trim().length > 0);
-  assert.equal(quiz.selectedCount(), 4);
+  assert.equal(quiz.isSolved(), false, 'four correct is not enough');
+  pickAll(quiz, correctIds().slice(4));
+  assert.equal(quiz.isSolved(), true, 'all five correct solves it');
 });
 
-test('submit with more than five selected is rejected', () => {
-  const quiz = createQuiz();
-  pickAll(quiz, QUIZ.options.map((o) => o.id));
-  assert.equal(quiz.submit().ok, false);
-});
-
-test('a perfect selection scores five and reviews every option exactly once', () => {
+test('a wrong selection keeps the activity unsolved until it is removed', () => {
   const quiz = createQuiz();
   pickAll(quiz, correctIds());
-  const result = quiz.submit();
-  assert.equal(result.ok, true);
-  assert.equal(result.score, 5);
-  assert.equal(result.max, 5);
-  assert.equal(result.review.length, QUIZ.options.length);
-  assert.deepEqual(
-    result.review.map((r) => r.id).sort(),
-    QUIZ.options.map((o) => o.id).sort(),
-  );
-  for (const r of result.review.filter((x) => x.chosen)) {
-    assert.equal(r.verdict, 'correct');
-  }
-  for (const r of result.review.filter((r) => !r.chosen)) {
-    assert.equal(r.verdict, 'avoided');
-  }
+  assert.equal(quiz.isSolved(), true);
+  quiz.toggle(distractorIds()[0]);
+  assert.equal(quiz.isSolved(), false, 'a distractor alongside the five blocks solving');
+  quiz.toggle(distractorIds()[0]);
+  assert.equal(quiz.isSolved(), true, 'removing it solves again');
+  quiz.toggle(correctIds()[0]);
+  assert.equal(quiz.isSolved(), false, 'dropping a correct answer unsolves it');
 });
 
-test('selecting all three distractors plus two correct answers scores two', () => {
-  const quiz = createQuiz();
-  pickAll(quiz, [...distractorIds(), ...correctIds().slice(0, 2)]);
-  const result = quiz.submit();
-  assert.equal(result.ok, true);
-  assert.equal(result.score, 2);
-  const counts = {};
-  for (const r of result.review) counts[r.verdict] = (counts[r.verdict] ?? 0) + 1;
-  assert.equal(counts.correct, 2);
-  assert.equal(counts.incorrect, 3);
-  assert.equal(counts.missed, 3);
-});
-
-test('every review item carries its label and explanation for the results screen', () => {
-  const quiz = createQuiz();
-  pickAll(quiz, [...distractorIds(), ...correctIds().slice(0, 2)]);
-  const result = quiz.submit();
-  assert.equal(result.ok, true);
-  for (const r of result.review) {
-    assert.ok(r.label.trim().length > 0);
-    assert.ok(r.explanation.trim().length > 0);
-    assert.equal(typeof r.correctAnswer, 'boolean');
-  }
+test('each engine instance is independent', () => {
+  const a = createQuiz();
+  const b = createQuiz();
+  pickAll(a, correctIds());
+  assert.equal(a.isSolved(), true);
+  assert.equal(b.isSolved(), false);
+  assert.equal(b.selectedCount(), 0);
 });

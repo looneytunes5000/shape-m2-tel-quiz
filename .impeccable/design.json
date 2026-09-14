@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-14T01:30:00Z",
+  "title": "Design System: Technology Enhanced Learning at VTC (SHAPE M2)",
+  "note": "Regenerated 14 Sep 2026 to match the flat tangerine editorial system (DESIGN.md) after the card-kit rendition was rejected. Human-readable source of truth: DESIGN.md.",
+  "extensions": {
+    "colorMeta": {
+      "tangerine-ground": { "role": "primary", "displayName": "Tangerine Ground", "canonical": "#ffe3c2" },
+      "tangerine-fill": { "role": "primary", "displayName": "Tangerine Fill", "canonical": "#ffd2a5" },
+      "field-paper": { "role": "secondary", "displayName": "Field Paper", "canonical": "#fff8ee" },
+      "warm-ink": { "role": "neutral", "displayName": "Warm Ink", "canonical": "#2b1a0c" },
+      "soft-umber": { "role": "neutral", "displayName": "Soft Umber", "canonical": "#6b4f34" },
+      "true-orange": { "role": "accent", "displayName": "True Orange", "canonical": "#d9480f" },
+      "burnt-orange": { "role": "accent-deep", "displayName": "Burnt Orange", "canonical": "#a53a08" },
+      "route-brown": { "role": "neutral", "displayName": "Route Brown", "canonical": "#a5702f" },
+      "verdict-green": { "role": "status", "displayName": "Verdict Green", "canonical": "#22663a" },
+      "verdict-red": { "role": "status", "displayName": "Verdict Red", "canonical": "#a02c1e" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "800-weight page title, straight on the tangerine ground." },
+      "headline": { "displayName": "Headline", "purpose": "800-weight section headings." },
+      "label": { "displayName": "Label", "purpose": "800-weight route stop names, sentence case; underlined when active." },
+      "body": { "displayName": "Body", "purpose": "Instructions, option labels, review explanations." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "state-transition", "value": "0.15s ease", "purpose": "Fill and border responses on options and the submit button; removed under prefers-reduced-motion." },
+      { "name": "route-state", "value": "0.2s ease", "purpose": "Route badge color transitions as stops change state; removed under prefers-reduced-motion." },
+      { "name": "cue-pulse", "value": "1.4s ease-in-out infinite", "purpose": "The cueing route badge pulses ink to burnt orange until the person does what it asks (watch → identify); reduced motion holds burnt orange instead." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "route-vertical", "value": "900px" },
+      { "name": "workspace-columns", "value": "1001px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Start-again Button",
+      "kind": "button",
+      "refersTo": "button-reload",
+      "description": "Quiet outline control that reloads the page for a fresh shuffle; tangerine fill on hover. Kept quieter than the verdict rows on purpose.",
+      "html": "<button class=\"ds-btn-reload\">Start again</button>",
+      "css": ".ds-btn-reload { font: 800 1rem/1.4 'Segoe UI', system-ui, sans-serif; padding: 0.7rem 1.4rem; color: #2b1a0c; background: transparent; border: 1.5px solid #2b1a0c; border-radius: 4px; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; } .ds-btn-reload:hover { background: #ffd2a5; border-color: #a53a08; } .ds-btn-reload:focus-visible { outline: 3px solid #a53a08; outline-offset: 2px; }"
+    },
+    {
+      "name": "Option Row",
+      "kind": "button",
+      "refersTo": "option",
+      "description": "Flat bordered paper field with a square letter marker; selecting reveals the verdict immediately — solid green (correct) or solid red (incorrect) with white text; deselect returns to rest. Nothing reveals before selection.",
+      "html": "<button class=\"ds-option is-correct\" aria-pressed=\"true\"><span class=\"ds-option-letter\">B</span><span class=\"ds-option-label\">Applied and Digital Skills</span></button>",
+      "css": ".ds-option { display: flex; align-items: center; gap: 0.8rem; width: 100%; padding: 0.8rem 0.95rem; text-align: left; font-family: 'Segoe UI', system-ui, sans-serif; color: #2b1a0c; background: #fff8ee; border: 1.5px solid #2b1a0c; border-radius: 4px; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; } .ds-option:hover { background: #ffd2a5; border-color: #a53a08; } .ds-option.is-correct { background: #22663a; border-color: #22663a; } .ds-option.is-incorrect { background: #a02c1e; border-color: #a02c1e; } .ds-option:focus-visible { outline: 3px solid #a53a08; outline-offset: 2px; } .ds-option-letter { flex: 0 0 auto; width: 1.9rem; height: 1.9rem; display: grid; place-items: center; font-size: 0.9rem; font-weight: 800; color: #2b1a0c; background: #ffe3c2; border: 1.5px solid #2b1a0c; border-radius: 2px; } .ds-option.is-correct .ds-option-letter, .ds-option.is-incorrect .ds-option-letter { background: #fff; border-color: #fff; } .ds-option.is-correct .ds-option-letter { color: #22663a; } .ds-option.is-incorrect .ds-option-letter { color: #a02c1e; } .ds-option-label { font-size: 1rem; font-weight: 600; } .ds-option.is-correct .ds-option-label, .ds-option.is-incorrect .ds-option-label { color: #fff; }"
+    },
+    {
+      "name": "Route Stop",
+      "kind": "custom",
+      "refersTo": "badge",
+      "description": "Two stops only (Watch, Identify), each atop its own column — the label is that column's heading. Square ink numeral, 800-weight label; active is burnt orange with an underlined label, done is soft umber. No connector. The stop asking for action pulses its badge until the person acts (cue).",
+      "html": "<div class=\"ds-route-stop is-cue\"><span class=\"ds-route-num\">1</span><h2 class=\"ds-route-label\">Watch</h2></div>",
+      "css": ".ds-route-stop { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 1.1rem; font-family: 'Segoe UI', system-ui, sans-serif; } .ds-route-num { flex: 0 0 auto; width: 1.9rem; height: 1.9rem; display: grid; place-items: center; font-size: 1rem; font-weight: 800; color: #ffd2a5; background: #2b1a0c; border-radius: 2px; transition: background 0.2s ease, color 0.2s ease; } .ds-route-label { margin: 0; font-size: 1.35rem; letter-spacing: -0.015em; font-weight: 800; line-height: 1.3; padding-bottom: 2px; border-bottom: 3px solid transparent; } .ds-route-stop.is-active .ds-route-num { color: #fff; background: #a53a08; } .ds-route-stop.is-active .ds-route-label { color: #a53a08; border-bottom-color: #d9480f; } .ds-route-stop.is-done .ds-route-label { color: #6b4f34; } @keyframes ds-cue-pulse { 0%, 100% { background: #2b1a0c; color: #ffd2a5; } 50% { background: #a53a08; color: #fff; } } .ds-route-stop.is-cue .ds-route-num { animation: ds-cue-pulse 1.4s ease-in-out infinite; } @media (prefers-reduced-motion: reduce) { .ds-route-stop.is-cue .ds-route-num { animation: none; background: #a53a08; color: #fff; } }"
+    },
+    {
+      "name": "Expand Control",
+      "kind": "button",
+      "refersTo": "button-expand",
+      "description": "Small outline toggle at the right of the Watch header; expands the player across the full content width and pins it while the answers scroll beneath. Layout-only change, so playback never restarts; expanded state tints tangerine.",
+      "html": "<button class=\"ds-btn-expand\" aria-expanded=\"false\">Expand video</button>",
+      "css": ".ds-btn-expand { margin-left: auto; font: 700 0.85rem/1.4 'Segoe UI', system-ui, sans-serif; padding: 0.35rem 0.8rem; color: #2b1a0c; background: transparent; border: 1.5px solid #2b1a0c; border-radius: 4px; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; } .ds-btn-expand:hover, .ds-btn-expand[aria-expanded='true'] { background: #ffd2a5; border-color: #a53a08; } .ds-btn-expand:focus-visible { outline: 3px solid #a53a08; outline-offset: 2px; }"
+    },
+    {
+      "name": "Masthead",
+      "kind": "nav",
+      "refersTo": "display",
+      "description": "800-weight title straight on the tangerine ground, closed by a 6px true-orange rule — no band, no card.",
+      "html": "<header class=\"ds-masthead\"><div class=\"ds-masthead-inner\"><h1>Technology Enhanced Learning at VTC</h1><p class=\"ds-mast-meta\">VTC CLT Training and Workshop — an interactive video activity for SHAPE Module M2</p></div></header>",
+      "css": ".ds-masthead { padding: 2.4rem 0 1.7rem; border-bottom: 6px solid #d9480f; font-family: 'Segoe UI', system-ui, sans-serif; color: #2b1a0c; } .ds-masthead-inner { max-width: 1000px; margin: 0 auto; padding: 0 1.25rem; } .ds-masthead h1 { margin: 0.3rem 0 0.45rem; font-size: clamp(2.1rem, 4vw, 2.75rem); line-height: 1.08; letter-spacing: -0.025em; font-weight: 800; } .ds-mast-meta { margin: 0; font-size: 0.95rem; color: #6b4f34; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The departmental poster",
+    "overview": "The page IS light orange: one saturated tangerine field carries everything, and warm near-black typography does the structural work — flat as a departmental poster pinned to the wall. No cards float, nothing casts a shadow, no element is rounded into softness. Authority comes from weight (800-weight display), strong 1.5px ink borders, and one bold color gesture: the verdict reveal on a selected answer.",
+    "keyCharacteristics": [
+      "A saturated tangerine ground (#ffe3c2) covers the entire page; content sits directly on it.",
+      "One family (system sans), weight-driven hierarchy up to 800.",
+      "Flat editorial geometry: square 2px markers, 4px fields, a 6px orange masthead rule.",
+      "Zero elevation — no shadows anywhere; borders and fills do all separation."
+    ],
+    "rules": [
+      { "name": "The Flat Field Rule", "body": "No shadows, ever. Separation is borders (1.5px ink), fills, and spacing. If an element seems to need a shadow, it needs a border instead.", "section": "colors" },
+      { "name": "The Verdict Quarantine Rule", "body": "Green and red appear only as the live reveal on a selected answer (correct = solid green, incorrect = solid red). Everything else on the surface stays orange/ink.", "section": "colors" },
+      { "name": "The One Family Rule", "body": "Every element is the system sans. Serif faces, italics, uppercase tracked labels, and second families are out of world.", "section": "typography" }
+    ],
+    "dos": [
+      "Do let the tangerine ground own the page — content sits on the color, not on white cards.",
+      "Do keep everything flat: borders and fill steps, never shadows.",
+      "Do keep the revealed row as the boldest element on the page.",
+      "Do keep route states live (cue pulse, active underline, done umber)."
+    ],
+    "donts": [
+      "Don't reintroduce the generated-card kit: white rounded cards, soft shadows, pill chips, or circular badges.",
+      "Don't use uppercase tracked labels, gradient text, or side-stripe borders.",
+      "Don't lighten the ground toward cream (#faf3e9 territory) — the drench is the identity.",
+      "Don't add a second type family or serif display."
+    ]
+  }
+}
