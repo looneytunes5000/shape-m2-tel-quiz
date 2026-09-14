@@ -1,6 +1,8 @@
 // View layer — renders engine state and handles input. Contains no business
 // logic: every decision about right/wrong comes from quiz.mjs.
-import { QUIZ, createQuiz } from './quiz.mjs';
+// The ?v= here must match the ones in index.html — bump all together on
+// every deploy so browsers never mix old and new files (Pages caches 10 min).
+import { QUIZ, createQuiz } from './quiz.mjs?v=20260914b';
 
 const LETTERS = 'ABCDEFGHI';
 
