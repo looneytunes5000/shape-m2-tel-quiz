@@ -2,7 +2,7 @@
 // logic: every decision about right/wrong comes from quiz.mjs.
 // The ?v= here must match the ones in index.html — bump all together on
 // every deploy so browsers never mix old and new files (Pages caches 10 min).
-import { QUIZ, createQuiz } from './quiz.mjs?v=20260914b';
+import { QUIZ, createQuiz } from './quiz.mjs?v=20260914c';
 
 const LETTERS = 'ABCDEFGHI';
 
@@ -73,7 +73,7 @@ function syncControls() {
   const found = quiz.correctSelectedCount();
   els.count.textContent = `${found} of ${QUIZ.requiredPicks} found`;
   els.hint.textContent = quiz.isSolved()
-    ? 'All five identified.'
+    ? `All ${QUIZ.requiredPicks} identified.`
     : found === QUIZ.requiredPicks
       ? 'Remove the ones marked red.'
       : '';

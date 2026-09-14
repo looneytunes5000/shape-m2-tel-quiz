@@ -5,9 +5,9 @@
 // below. No other file needs editing.
 //   videoId ......... the YouTube id of the embedded video (wired in by
 //                     app.mjs — no HTML edit needed)
-//   requiredPicks ... how many answers the task asks for (kept at 5)
-//   options ......... exactly nine entries; set correct: true on the five
-//                     answers and correct: false on the distractors
+//   requiredPicks ... how many answers the task asks for
+//   options ......... exactly nine entries; set correct: true on the answers
+//                     and correct: false on the distractors
 //   explanation ..... context for each option (not shown in the current
 //                     reveal-only flow; kept as facilitator reference)
 // ==========================================================================
@@ -15,70 +15,70 @@
 export const QUIZ = {
   videoId: 'KBlohpOEJOs',
   videoTitle: 'VTC Technology Enhanced Learning',
-  requiredPicks: 5,
+  requiredPicks: 7,
   options: [
     {
-      id: 'applied-digital-skills',
-      label: 'Applied and Digital Skills',
+      id: 'virtual-reality',
+      label: 'Virtual Reality (VR)',
       correct: true,
       explanation:
-        'The video opens by describing how VTC equips students with applied and digital skills for the modern workplace (0:00–0:41).',
+        'Shown from 0:56 — students practise in immersive VR-simulated environments.',
     },
     {
-      id: 'computer-aided-assessment',
-      label: 'Computer-aided Assessment',
+      id: 'augmented-reality',
+      label: 'Augmented Reality (AR)',
       correct: true,
       explanation:
-        'Named in the blended-learning part of the video: teachers use computer-aided assessment to evaluate learning progress (2:46).',
+        'Shown at 1:26 — AR overlays digital content onto real equipment for training.',
     },
     {
-      id: 'smart-learning-facilities',
-      label: 'Smart Learning Facilities',
+      id: 'mixed-reality',
+      label: 'Mixed Reality (MR)',
       correct: true,
       explanation:
-        'The VR, AR and MR systems and labs shown in the video are examples of the facilities that let students practise safely (0:56–2:34).',
+        'Shown at 1:58 — MR blends physical and digital elements in practice spaces.',
     },
     {
       id: 'wearable-technology',
       label: 'Wearable Technology',
       correct: true,
       explanation:
-        'The wearable broadcast system lets teachers demonstrate techniques so students can visualise every detail (1:46).',
+        'Shown at 1:46 — the wearable broadcast system lets teachers demonstrate techniques in fine detail.',
+    },
+    {
+      id: 'blended-learning',
+      label: 'Blended Learning',
+      correct: true,
+      explanation:
+        'Named at 2:35 — combining face-to-face lessons with online learning.',
     },
     {
       id: 'learning-management-platform',
       label: 'Learning Management Platform',
       correct: true,
       explanation:
-        'The blended-learning section combines face-to-face lessons with online learning, which the course framework groups under the learning management platform (2:35).',
+        'Named at 2:35 — the platform that carries VTC’s online and blended learning.',
     },
     {
-      id: 'virtual-reality',
-      label: 'Virtual Reality (VR)',
-      correct: false,
+      id: 'smart-learning-facilities',
+      label: 'Smart Learning Facilities',
+      correct: true,
       explanation:
-        'A technology demonstrated in the video, not a framework category — VR simulation training is an example of smart learning facilities (0:56).',
+        'The video shows smart labs and facilities (0:56–2:34) purpose-built for technology-supported learning.',
     },
     {
-      id: 'augmented-reality',
-      label: 'Augmented Reality (AR)',
+      id: 'applied-digital-skills',
+      label: 'Applied and Digital Skills',
       correct: false,
       explanation:
-        'A technology demonstrated in the video, not a framework category — AR is an example of smart learning facilities (1:26).',
+        'The video’s opening (0:00–0:41) describes applied and digital skills as the goal of TEL, not one of its types.',
     },
     {
-      id: 'mixed-reality',
-      label: 'Mixed Reality (MR)',
+      id: 'computer-aided-assessment',
+      label: 'Computer-aided Assessment',
       correct: false,
       explanation:
-        'A technology demonstrated in the video, not a framework category — MR is an example of smart learning facilities (1:58).',
-    },
-    {
-      id: 'blended-learning',
-      label: 'Blended Learning',
-      correct: false,
-      explanation:
-        'Named in the video (2:35) as a teaching approach, not a framework type — the blended-learning content belongs to the Learning Management Platform category.',
+        'Mentioned at 2:46 as a way to evaluate learning progress — an assessment method, not a TEL type demonstrated.',
     },
   ],
 };

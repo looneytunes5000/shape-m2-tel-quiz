@@ -2,11 +2,10 @@
 
 A single-page, no-login activity for CLT training workshops. Participants watch
 the official VTC video **“VTC Technology Enhanced Learning”** (3 min 25 s), then
-identify the **five types of technology enhanced learning** according to the
-course framework by picking them from nine options. Each pick instantly shows
-whether it is a framework category (green) or a demonstrated technology (red);
-the activity completes when all five are found, and **Start again** reloads
-with a fresh shuffle.
+identify the **TEL types demonstrated in the video** by picking them from nine
+options. Each pick instantly shows whether it is one of the seven TEL types
+(green) or not (red); the activity completes when all seven are found, and
+**Start again** reloads with a fresh shuffle.
 
 **Live URL:** https://looneytunes5000.github.io/shape-m2-tel-quiz/
 

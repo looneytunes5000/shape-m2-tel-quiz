@@ -8,10 +8,10 @@ const correctIds = () => QUIZ.options.filter((o) => o.correct).map((o) => o.id);
 const distractorIds = () => QUIZ.options.filter((o) => !o.correct).map((o) => o.id);
 const pickAll = (quiz, ids) => ids.forEach((id) => quiz.toggle(id));
 
-test('configuration defines exactly nine options with exactly five correct', () => {
+test('configuration defines exactly nine options with exactly seven correct', () => {
   assert.equal(QUIZ.options.length, 9);
-  assert.equal(QUIZ.options.filter((o) => o.correct).length, 5);
-  assert.equal(QUIZ.requiredPicks, 5);
+  assert.equal(QUIZ.options.filter((o) => o.correct).length, 7);
+  assert.equal(QUIZ.requiredPicks, 7);
   assert.ok(QUIZ.videoId);
 });
 
@@ -36,13 +36,13 @@ test('toggling the same option twice deselects it', () => {
   assert.equal(quiz.isSelected(first), false);
 });
 
-test('isSolved is true only when exactly the five correct options are selected', () => {
+test('isSolved is true only when exactly the correct options are selected', () => {
   const quiz = createQuiz();
   assert.equal(quiz.isSolved(), false, 'starts unsolved');
-  pickAll(quiz, correctIds().slice(0, 4));
-  assert.equal(quiz.isSolved(), false, 'four correct is not enough');
-  pickAll(quiz, correctIds().slice(4));
-  assert.equal(quiz.isSolved(), true, 'all five correct solves it');
+  pickAll(quiz, correctIds().slice(0, QUIZ.requiredPicks - 1));
+  assert.equal(quiz.isSolved(), false, 'all but one is not enough');
+  pickAll(quiz, correctIds().slice(QUIZ.requiredPicks - 1));
+  assert.equal(quiz.isSolved(), true, 'all correct options solve it');
 });
 
 test('a wrong selection keeps the activity unsolved until it is removed', () => {
