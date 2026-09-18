@@ -6,7 +6,7 @@
   <title>Technology Enhanced Learning at VTC — SHAPE Module M2</title>
   <meta name="description" content="Watch the VTC video on technology enhanced learning, then identify the five TEL types from the course framework. A no-login activity for CLT training (SHAPE Module M2).">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23d9480f'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css?v=20260914c">
+  <link rel="stylesheet" href="styles.css?v=20260918a">
 </head>
 <body>
   <!--
@@ -39,13 +39,44 @@
     playback never restarts.
   -->
   <header class="masthead">
-    <div class="wrap">
+    <div class="shell">
       <h1>Technology Enhanced Learning at VTC</h1>
       <p class="mast-meta">VTC CLT Training and Workshop — SHAPE Module M2</p>
     </div>
   </header>
 
-  <main class="wrap">
+  <div class="shell shell--split">
+    <details class="guide" id="guide" open>
+      <summary class="guide-summary">
+        <h2 class="guide-heading" id="guide-heading">How this works</h2>
+      </summary>
+      <ol class="guide-steps">
+        <li>
+          <span class="guide-num" aria-hidden="true">1</span>
+          <div class="guide-body">
+            <p class="guide-label">Open</p>
+            <p>Tap the link in the chat, or scan the code with your phone.</p>
+            <img class="guide-qr" src="quiz-qr.png" alt="QR code linking to this activity" width="516" height="516">
+          </div>
+        </li>
+        <li>
+          <span class="guide-num" aria-hidden="true">2</span>
+          <div class="guide-body">
+            <p class="guide-label">Watch and identify</p>
+            <p>Play the video, then click the options that name the seven technology-enhanced learning elements in it.</p>
+          </div>
+        </li>
+        <li>
+          <span class="guide-num" aria-hidden="true">3</span>
+          <div class="guide-body">
+            <p class="guide-label">Finish</p>
+            <p>No submit button. A 🎉 appears once all seven are found.</p>
+          </div>
+        </li>
+      </ol>
+    </details>
+
+    <main>
     <section class="workspace">
       <div class="video-col" id="video-col">
         <div class="route-stop is-cue" data-route="watch" aria-current="step">
@@ -79,16 +110,19 @@
         </div>
       </div>
     </section>
-  </main>
+    </main>
+  </div>
 
-  <footer class="colophon wrap">
-    <p>Source video: “VTC Technology Enhanced Learning” © Vocational Training Council, on YouTube.</p>
-    <p>Built for CLT training use. No accounts, no data collection — everything stays on this page.</p>
+  <footer class="colophon">
+    <div class="shell">
+      <p>Source video: “VTC Technology Enhanced Learning” © Vocational Training Council, on YouTube.</p>
+      <p>Built for CLT training use. No accounts, no data collection — everything stays on this page.</p>
+    </div>
   </footer>
 
   <noscript><p class="noscript">This activity needs JavaScript to run.</p></noscript>
   <!-- Cache-busting: bump all three ?v= values (also in app.mjs's quiz.mjs
        import) whenever a deploy changes content or styles. -->
-  <script type="module" src="app.mjs?v=20260914c"></script>
+  <script type="module" src="app.mjs?v=20260918a"></script>
 </body>
 </html>

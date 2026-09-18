@@ -165,8 +165,13 @@ tracking.
 
 ## Layout
 
-A single centered column, max-width 1000px, 1.25rem side padding. Order:
-masthead (title over a 6px orange rule) → workspace → colophon.
+A centered shell, max-width 1320px, 1.25rem side padding, with the activity
+itself held to ~1000px beside the briefing panel. Order: masthead (title
+over a 6px orange rule) → guide panel + workspace → colophon. The shell
+splits into a 15rem guide column and the activity column ≥1201px; below that
+the guide becomes a disclosure above the activity (collapsed by default on
+phones, so the video keeps the top of the screen), and it hides entirely in
+expanded video mode.
 The workspace is a two-column grid ≥1001px (video 3fr / answers 2fr, 2.25rem
 gap, top-aligned); the two route stops live atop their own columns — badge 1
 above the video, badge 2 above the answers — and travel with that content at
@@ -219,6 +224,23 @@ is the 6px masthead rule; the colophon closes with a 2px ink rule.
   1.4s) until the person does what it asks — stop 1 until playback starts,
   stop 2 until the first selection. Under reduced motion the cueing badge
   holds burnt orange instead of pulsing.
+
+### Guide panel (briefing)
+- Sticky left column beside the activity: the "How this works" heading, three
+  numbered steps in the same square markers as the route stops, and the QR
+  code as a bordered field under step 1.
+- Flat like everything else: no card, no fill — separation is a 1.5px ink
+  column rule. On phones the whole panel collapses to a bordered
+  "How this works" disclosure row (▸/▾) above the video.
+
+### Completion celebration
+- When the seventh answer lands, a short confetti burst (~2.5s, then gone)
+  fires from the completion line, in the page's own palette — true orange,
+  burnt orange, tangerine fill, warm ink, verdict green, field paper. It is
+  the one place motion runs on its own; everything else answers an action.
+- The line itself reads "All 7 identified 🎉" in bold ink.
+- Nothing at all runs under `prefers-reduced-motion: reduce` — the line and
+  the emoji carry the moment on their own.
 
 ### Expand control
 - Small outline button at the right of the Watch header. Turns the page into

@@ -2,18 +2,20 @@
 // logic: every decision about right/wrong comes from quiz.mjs.
 // The ?v= here must match the ones in index.html — bump all together on
 // every deploy so browsers never mix old and new files (Pages caches 10 min).
-import { QUIZ, createQuiz } from './quiz.mjs?v=20260914c';
+import { QUIZ, createQuiz } from './quiz.mjs?v=20260918a';
 
 const LETTERS = 'ABCDEFGHI';
 
 const quiz = createQuiz();
 let watchDone = false;
+let celebrated = false;
 
 const els = {
   options: document.getElementById('options'),
   count: document.getElementById('count'),
   hint: document.getElementById('count-hint'),
   reload: document.getElementById('reload'),
+  guide: document.getElementById('guide'),
   expand: document.getElementById('expand'),
   workspace: document.querySelector('.workspace'),
   videoFrame: document.querySelector('.video-frame iframe'),
@@ -71,13 +73,80 @@ function renderOptions() {
 
 function syncControls() {
   const found = quiz.correctSelectedCount();
+  const solved = quiz.isSolved();
   els.count.textContent = `${found} of ${QUIZ.requiredPicks} found`;
-  els.hint.textContent = quiz.isSolved()
-    ? `All ${QUIZ.requiredPicks} identified.`
+  els.hint.textContent = solved
+    ? `All ${QUIZ.requiredPicks} identified 🎉`
     : found === QUIZ.requiredPicks
       ? 'Remove the ones marked red.'
       : '';
+  els.hint.classList.toggle('is-solved', solved);
+  if (solved && !celebrated) celebrate(els.hint);
+  celebrated = solved;
   syncRoute();
+}
+
+/* A short burst from the completion line when the last answer lands — same
+   palette as the page, ~2.5 seconds, then the canvas removes itself. Skipped
+   entirely for anyone who asked for reduced motion. */
+function celebrate(originEl) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const canvas = document.createElement('canvas');
+  canvas.className = 'confetti';
+  canvas.setAttribute('aria-hidden', 'true');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  document.body.append(canvas);
+  const ctx = canvas.getContext('2d');
+
+  const COLORS = ['#d9480f', '#a53a08', '#ffd2a5', '#2b1a0c', '#22663a', '#fff8ee'];
+  const rect = originEl.getBoundingClientRect();
+  const originX = rect.left + rect.width / 2;
+  const originY = rect.top + rect.height / 2;
+
+  const pieces = Array.from({ length: 140 }, () => {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 4 + Math.random() * 9;
+    return {
+      x: originX,
+      y: originY,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 4,
+      w: 6 + Math.random() * 6,
+      h: 8 + Math.random() * 8,
+      rot: Math.random() * Math.PI,
+      spin: (Math.random() - 0.5) * 0.3,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      life: 1,
+    };
+  });
+
+  let frames = 0;
+  const tick = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of pieces) {
+      p.vy += 0.28;
+      p.vx *= 0.99;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.spin;
+      p.life -= 0.012;
+      if (p.life <= 0) continue;
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, p.life * 1.6);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+    frames += 1;
+    if (frames < 150) requestAnimationFrame(tick);
+    else canvas.remove();
+  };
+  requestAnimationFrame(tick);
+  window.addEventListener('resize', () => canvas.remove(), { once: true });
 }
 
 /* Two live stops: 1 cues the video, 2 cues the answers once the video plays.
@@ -106,6 +175,14 @@ function syncRoute() {
 }
 
 els.reload.addEventListener('click', () => location.reload());
+
+/* Phones start with the briefing collapsed so the video keeps the top of the
+   screen; wide screens always show it. */
+if (window.innerWidth <= 640) els.guide.open = false;
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 1200) els.guide.open = true;
+});
 
 /* Expand: the workspace becomes a viewport-height theater — the player
    spans the full width on top and the answers scroll in the region beneath.

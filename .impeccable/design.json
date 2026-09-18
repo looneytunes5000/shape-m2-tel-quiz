@@ -26,7 +26,8 @@
     "motion": [
       { "name": "state-transition", "value": "0.15s ease", "purpose": "Fill and border responses on options and the submit button; removed under prefers-reduced-motion." },
       { "name": "route-state", "value": "0.2s ease", "purpose": "Route badge color transitions as stops change state; removed under prefers-reduced-motion." },
-      { "name": "cue-pulse", "value": "1.4s ease-in-out infinite", "purpose": "The cueing route badge pulses ink to burnt orange until the person does what it asks (watch → identify); reduced motion holds burnt orange instead." }
+      { "name": "cue-pulse", "value": "1.4s ease-in-out infinite", "purpose": "The cueing route badge pulses ink to burnt orange until the person does what it asks (watch → identify); reduced motion holds burnt orange instead." },
+      { "name": "confetti-burst", "value": "~2.5s canvas burst, 140 pieces", "purpose": "Fires once from the completion line when the seventh answer lands, in the page palette; skipped entirely under prefers-reduced-motion." }
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px" },
@@ -58,6 +59,14 @@
       "description": "Two stops only (Watch, Identify), each atop its own column — the label is that column's heading. Square ink numeral, 800-weight label; active is burnt orange with an underlined label, done is soft umber. No connector. The stop asking for action pulses its badge until the person acts (cue).",
       "html": "<div class=\"ds-route-stop is-cue\"><span class=\"ds-route-num\">1</span><h2 class=\"ds-route-label\">Watch</h2></div>",
       "css": ".ds-route-stop { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 1.1rem; font-family: 'Segoe UI', system-ui, sans-serif; } .ds-route-num { flex: 0 0 auto; width: 1.9rem; height: 1.9rem; display: grid; place-items: center; font-size: 1rem; font-weight: 800; color: #ffd2a5; background: #2b1a0c; border-radius: 2px; transition: background 0.2s ease, color 0.2s ease; } .ds-route-label { margin: 0; font-size: 1.35rem; letter-spacing: -0.015em; font-weight: 800; line-height: 1.3; padding-bottom: 2px; border-bottom: 3px solid transparent; } .ds-route-stop.is-active .ds-route-num { color: #fff; background: #a53a08; } .ds-route-stop.is-active .ds-route-label { color: #a53a08; border-bottom-color: #d9480f; } .ds-route-stop.is-done .ds-route-label { color: #6b4f34; } @keyframes ds-cue-pulse { 0%, 100% { background: #2b1a0c; color: #ffd2a5; } 50% { background: #a53a08; color: #fff; } } .ds-route-stop.is-cue .ds-route-num { animation: ds-cue-pulse 1.4s ease-in-out infinite; } @media (prefers-reduced-motion: reduce) { .ds-route-stop.is-cue .ds-route-num { animation: none; background: #a53a08; color: #fff; } }"
+    },
+    {
+      "name": "Guide Panel",
+      "kind": "custom",
+      "refersTo": "guide",
+      "description": "Sticky briefing column beside the activity: heading, three numbered steps in square markers, and the QR code as a bordered field. Separated by a 1.5px ink column rule, no card. Collapses to a disclosure above the video below 1201px and is hidden in expanded video mode.",
+      "html": "<details class=\"ds-guide\" open><summary class=\"ds-guide-summary\"><h2 class=\"ds-guide-heading\">How this works</h2></summary><ol class=\"ds-guide-steps\"><li><span class=\"ds-guide-num\">1</span><div><p class=\"ds-guide-label\">Open</p><p>Tap the link in the chat, or scan the code with your phone.</p><img class=\"ds-guide-qr\" src=\"quiz-qr.png\" alt=\"\"></div></li></ol></details>",
+      "css": ".ds-guide { position: sticky; top: 1.5rem; padding-right: 1.5rem; border-right: 1.5px solid #2b1a0c; font-family: 'Segoe UI', system-ui, sans-serif; } .ds-guide-summary { display: flex; align-items: center; gap: 0.5rem; list-style: none; cursor: default; } .ds-guide-heading { margin: 0; font-size: 1.05rem; letter-spacing: -0.015em; font-weight: 800; } .ds-guide-steps { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 1.1rem; } .ds-guide-steps li { display: grid; grid-template-columns: 1.4rem minmax(0, 1fr); gap: 0.6rem; } .ds-guide-num { width: 1.4rem; height: 1.4rem; display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; color: #ffd2a5; background: #2b1a0c; border-radius: 2px; } .ds-guide-label { margin: 0 0 0.15rem; font-weight: 800; font-size: 0.9rem; } .ds-guide-qr { display: block; width: 8.5rem; height: auto; margin-top: 0.7rem; border: 1.5px solid #2b1a0c; border-radius: 4px; }"
     },
     {
       "name": "Expand Control",

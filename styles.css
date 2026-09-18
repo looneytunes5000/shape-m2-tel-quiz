@@ -29,10 +29,121 @@ body {
   line-height: 1.6;
 }
 
-.wrap {
-  max-width: 1000px;
+.shell {
+  max-width: 1320px;
   margin: 0 auto;
   padding: 0 1.25rem;
+}
+
+/* ---- Guide: the briefing panel beside the activity ------------------------ */
+
+.shell--split {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.guide {
+  position: sticky;
+  top: 1.5rem;
+  padding-right: 1.5rem;
+  border-right: 1.5px solid var(--ink);
+}
+
+.guide-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  cursor: default;
+}
+
+.guide-summary::-webkit-details-marker { display: none; }
+
+.guide-heading {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: -0.015em;
+  font-weight: 800;
+}
+
+.guide-steps {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.1rem;
+}
+
+.guide-steps li {
+  display: grid;
+  grid-template-columns: 1.4rem minmax(0, 1fr);
+  gap: 0.6rem;
+}
+
+.guide-num {
+  width: 1.4rem;
+  height: 1.4rem;
+  display: grid;
+  place-items: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--fill);
+  background: var(--ink);
+  border-radius: 2px;
+}
+
+.guide-body p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.guide-body .guide-label {
+  margin: 0 0 0.15rem;
+  font-weight: 800;
+}
+
+.guide-qr {
+  display: block;
+  width: 8.5rem;
+  height: auto;
+  margin-top: 0.7rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+}
+
+/* Narrow screens: the panel becomes a disclosure above the activity */
+@media (max-width: 1200px) {
+  .shell--split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+  }
+
+  .guide {
+    position: static;
+    padding: 0;
+    border-right: 0;
+  }
+
+  .guide-summary {
+    padding: 0.6rem 0.9rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .guide-summary::after {
+    content: '▾';
+    margin-left: auto;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+
+  .guide:not([open]) .guide-summary::after { content: '▸'; }
+
+  .guide-steps { margin-top: 1.2rem; }
 }
 
 /* ---- Masthead: bold type straight on the ground, one strong rule -------- */
@@ -200,6 +311,11 @@ h3 {
 
 body.theater-open { overflow: hidden; }
 
+/* theater mode gives the whole width to the player and answers */
+body.theater-open .guide { display: none; }
+
+body.theater-open .shell--split { grid-template-columns: minmax(0, 1fr); }
+
 /* Theater: the workspace fills the viewport below the masthead — player on
    top, answers in their own scroll region beneath, so nothing ever slides
    behind the video. Layout-only change, playback never restarts. */
@@ -346,6 +462,22 @@ body.theater-open { overflow: hidden; }
   min-height: 1.3em;
   font-size: 0.85rem;
   color: var(--ink-soft);
+}
+
+.count-hint.is-solved {
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+/* the celebration canvas: fixed, inert, above everything, gone in ~2.5s */
+.confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
 }
 
 .reload {
